@@ -176,3 +176,20 @@ body,
     text-transform: none;
     color: rgba(249, 245, 245, 0.87) !important;
 }
+
+#menu {
+    width: 150px;
+    padding: 0.8em;
+}
+
+#floorSelector {
+    height: 100px;
+    margin: 1em 0 1em -40px;
+    background: transparent;
+}
+
+@font-face {
+    font-family: "CustomFont";
+    src: url("https://yoursite.com/css/fonts/CustomFont.eot");
+    src: url("https://yoursite.com/css/fonts/CustomFont.woff") format("woff"), url("https://yoursite.com/css/fonts/CustomFont.otf") format("opentype"), url("https://yoursite.com/css/fonts/CustomFont.svg#filename") format("svg");
+}
