@@ -31,15 +31,22 @@
 
 
 <body>
+
     <button class="esri-button" id="slice" type="button" title="Slice layers">
         Skjære i bygg
     </button>
-    <div id="viewDiv"></div>
+
+    <div id="viewDiv">
+
+    </div>
+
     <div id="menu" class="esri-widget">
         <p>Filtrere på etasje:</p>
         <div id="floorSelector"></div>
         <button id="filterReset" class="esri-button">Fjern filter</button>
     </div>
+
+    <h1 class="esri-widget__heading">Dette er ene test</h1>
 
 
 
@@ -550,7 +557,7 @@
 
 
                 const person_sensor = new FeatureLayer({
-                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/workers_849f438592b34217888362df2e4c404e/FeatureServer",
+                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Forkbeard_siste_posisjon/FeatureServer/0",
                         title: "Arbeidere",
                         //listMode: "hide",
                         outFields: ["*"],
@@ -570,10 +577,53 @@
 
                 );
 
+                const Scene = new SceneLayer({
+                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/scene_geotek2020/SceneServer",
+                        title: "Scene",
+                        //visible: false,
+                        //listMode: "hide",
+                        outFields: ["*"],
+                        purgeOptions: {
+                            displayCount: 1000
+                        },
+                        //renderer: DisTechRendrerPROX,
+                        //popupTemplate: template,
+                        refreshInterval: 0.01,
+                        elevationInfo: {
+                            // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
+                            mode: "absolute-height",
+                            offset: 5.7
+                        },
+
+                    }
+
+                );
+                const Stoler = new SceneLayer({
+                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/stol_scandicOpera/SceneServer",
+                        title: "Stoler",
+                        //visible: false,
+                        //listMode: "hide",
+                        outFields: ["*"],
+                        purgeOptions: {
+                            displayCount: 1000
+                        },
+                        //renderer: DisTechRendrerPROX,
+                        //popupTemplate: template,
+                        refreshInterval: 0.01,
+                        elevationInfo: {
+                            // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
+                            mode: "absolute-height",
+                            offset: 8.1
+                        },
+
+                    }
+
+                );
+
                 const Stoler_sensor = new FeatureLayer({
                         url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Stoler_pkt_Buffer/FeatureServer",
                         title: "Stol_sensor",
-                        visible: true,
+                        visible: false,
                         outFields: ["*"],
                         purgeOptions: {
                             displayCount: 1000
@@ -586,15 +636,16 @@
                         elevationInfo: {
                             // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
                             mode: "absolute-height",
-                            offset: 8
+                            offset: 8.1
                         },
 
                     }
 
                 );
 
+
                 const hotellBIM = new BuildingSceneLayer({
-                        url: "https://tiles.arcgis.com/tiles/2JyTvMWQSnM2Vi8q/arcgis/rest/services/HeleHotellet/SceneServer", //"https://tiles.arcgis.com/tiles/2JyTvMWQSnM2Vi8q/arcgis/rest/services/geodataDigitaltvilling_plan/SceneServer",
+                        url: "https://tiles.arcgis.com/tiles/2JyTvMWQSnM2Vi8q/arcgis/rest/services/ScandicHotellOpera03/SceneServer", //"https://tiles.arcgis.com/tiles/2JyTvMWQSnM2Vi8q/arcgis/rest/services/geodataDigitaltvilling_plan/SceneServer",
                         title: "BIM - S28",
                         visible: true,
                         outFields: ["*"],
@@ -619,6 +670,7 @@
                         title: "Bygninger",
                         definitionExpression: defExpression,
                         outFields: ["*"],
+                        visible: false,
                         purgeOptions: {
                             displayCount: 1000
                         },
@@ -654,7 +706,7 @@
                 var map = new Map({
                     //basemap: basemap,
                     //ground: "world-elevation",
-                    layers: [hotellBIM, Bygninger_Norge_Oslo, Stoler_sensor, person_sensor],
+                    layers: [hotellBIM, Bygninger_Norge_Oslo, Stoler_sensor, person_sensor, Stoler, Scene],
                     ground: {
                         surfaceColor: "#2A363B"
                     }
@@ -727,6 +779,10 @@
                             case "Rooms":
                                 layer.visible = false;
                                 break;
+                            case "GenericModel":
+                                layer.visible = false;
+                                break;
+
 
                                 // Extract the layers that should not be hidden by the slice widget
                             case "Doors":
@@ -752,7 +808,7 @@
                     const buildingFilter = new BuildingFilter({
                         filterBlocks: [{
                             // an SQL expression that filters using the BldgLevel field
-                            filterExpression: "BldgLevel_Desc = 'Plan 02'",
+                            filterExpression: "BldgLevel_Desc = '02'",
                             filterMode: {
                                 type: "solid"
                             }
@@ -767,17 +823,17 @@
                 // define a slider that will filter floors
                 const floorSlider = new Slider({
                     container: "floorSelector",
-                    min: 0,
-                    max: 1,
+                    min: 1,
+                    max: 9,
                     precision: 0,
                     layout: "vertical",
                     steps: 1,
                     tickConfigs: [{
                         mode: "position",
-                        values: ['Plan 02', 'Plan 07 B'],
+                        values: [01, 02, 03, 04, 05, 06, 07, 08, 09],
                         labelsVisible: true
                     }],
-                    values: [1]
+                    values: [2]
                 });
 
                 // when the user changes the value, the filter is cloned and a new expression is set
@@ -786,6 +842,7 @@
                     const filter = hotellBIM.filters.getItemAt(0).clone();
                     filter.filterBlocks.getItemAt(0).filterExpression =
                         "BldgLevel_Desc = " + values[0].toString();
+                    //console.log("FilterExp: ", filterExpression)
                     hotellBIM.filters = [filter];
                     // when cloning the filter keeps the id, but this is set in case the filter was reset
                     hotellBIM.activeFilterId = filter.id;
