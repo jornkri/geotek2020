@@ -176,7 +176,6 @@ body,
     text-transform: none;
     color: rgba(249, 245, 245, 0.87) !important;
 }
-<<<<<<< HEAD
 #menu {
     width: 150px;
     padding: 0.8em;
@@ -187,22 +186,37 @@ body,
     margin: 1em 0 1em -40px;
     background: transparent;
   }
-=======
 
-#menu {
-    width: 150px;
-    padding: 0.8em;
+.title-overlay{
+    position: fixed;
+    top: 20px;
+    left: 100px;
+    width: 500px;
+    height: 100px;
+    color: #33A7B7;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding: 20px;
+
 }
 
-#floorSelector {
-    height: 200px;
-    margin: 1em 0 1em -40px;
-    background: transparent;
+.title-overlay-logo{
+    position: fixed;
+    top: 40px;
+    left: 100px;
+    width: 500px;
+    height: 100px;
+    color: #33A7B7;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding: 20px;
+
 }
 
-@font-face {
-    font-family: "CustomFont";
-    src: url("https://yoursite.com/css/fonts/CustomFont.eot");
-    src: url("https://yoursite.com/css/fonts/CustomFont.woff") format("woff"), url("https://yoursite.com/css/fonts/CustomFont.otf") format("opentype"), url("https://yoursite.com/css/fonts/CustomFont.svg#filename") format("svg");
+.title {
+    font-family: "Syncopate", sans-serif;
 }
->>>>>>> c4ead3b3b267edc892d0b25a90151efadfc5d7f9
