@@ -176,3 +176,13 @@ body,
     text-transform: none;
     color: rgba(249, 245, 245, 0.87) !important;
 }
+#menu {
+    width: 150px;
+    padding: 0.8em;
+  }
+
+  #floorSelector {
+    height: 100px;
+    margin: 1em 0 1em -40px;
+    background: transparent;
+  }
