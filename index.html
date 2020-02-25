@@ -36,6 +36,9 @@
     <button class="esri-button" id="slice" type="button" title="Slice layers">
         Tverrsnitt
     </button>
+    <button class="esri-button" id="leggTilLag" type="button">
+        Trace
+    </button>
 
    
         <div class="title-overlay"><svg width="242px" height="80px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 36"><g fill="#FFFFFF"><path d="M44.13 20.38a.23.23 0 0 0-.25-.24h-1.63a.48.48 0 0 1-.48-.48v-2.29c0-.26.21-.48.48-.48h4.7c.26 0 .48.22.48.48v4.05c0 2.9-2.43 5.27-5.74 5.27-3.3 0-5.4-2.43-5.73-5.32a31.6 31.6 0 0 1 0-6.75c.34-2.9 2.4-5.33 5.73-5.33 3.33 0 5.74 2.29 5.74 5.5v.02a.5.5 0 0 1-.48.48h-2.4a.48.48 0 0 1-.49-.48v-.02c0-1-.84-2.1-2.36-2.1-1.47 0-2.22.87-2.34 1.93-.24 2.24-.24 4.5 0 6.75.12 1.06.87 1.93 2.34 1.93 1.47 0 2.43-.8 2.43-1.88v-1.04zm9.28 2.44a.23.23 0 0 0 .24.24h5.7c.27 0 .49.22.49.48v2.41c0 .27-.22.48-.48.48H50.5a.48.48 0 0 1-.48-.48v-15.9c0-.27.22-.49.48-.49h8.76c.27 0 .48.22.48.49v2.4c0 .27-.21.49-.48.49h-5.62a.23.23 0 0 0-.24.24v2.89a.23.23 0 0 0 .24.24h5.42c.27 0 .48.22.48.48v2.41c0 .27-.21.48-.48.48h-5.42a.23.23 0 0 0-.24.24v2.9zm20.15-8.2c.24 2.25.24 4.51 0 6.75-.34 2.9-2.41 5.33-5.74 5.33s-5.4-2.43-5.74-5.33a31.6 31.6 0 0 1 0-6.74c.34-2.9 2.41-5.33 5.74-5.33s5.4 2.43 5.74 5.33zm-3.4 6.75c.24-2.24.24-4.5 0-6.74-.12-1.06-.87-1.93-2.34-1.93-1.47 0-2.22.86-2.34 1.93-.24 2.24-.24 4.5 0 6.74.12 1.06.87 1.93 2.34 1.93 1.47 0 2.22-.87 2.34-1.93zm10.58-10.02v14.6c0 .27-.22.48-.48.48h-.6a.48.48 0 0 1-.49-.48v-14.6a.23.23 0 0 0-.24-.24h-3.57a.48.48 0 0 1-.48-.48v-.58c0-.27.22-.49.48-.49h9.16c.27 0 .48.22.49.49v.57c0 .27-.22.48-.49.49h-3.54a.23.23 0 0 0-.24.24zm7.42 13.3a.23.23 0 0 0 .24.24h6.3c.26 0 .47.22.48.48v.58c0 .27-.22.48-.49.48H87.1a.48.48 0 0 1-.48-.48v-15.9c0-.27.22-.49.48-.49h7.54c.27 0 .49.22.49.49v.57c0 .27-.22.48-.49.49H88.4a.23.23 0 0 0-.24.24v5.47a.23.23 0 0 0 .24.24h5.98c.27 0 .48.22.48.48v.55c0 .26-.21.48-.48.48H88.4a.23.23 0 0 0-.24.24v5.84zm11.52-5.42c-.04-.07-.19-.07-.19.05v6.67c0 .27-.22.48-.48.49h-.58a.48.48 0 0 1-.48-.49v-15.9c0-.27.21-.49.48-.49h.58c.26 0 .48.22.48.49v6.36c0 .12.15.12.2.05l5.54-6.63a.76.76 0 0 1 .62-.26h.39c.58 0 .7.53.4.86l-5.94 7.02c-.15.2-.22.37-.03.58l6.37 7.52c.26.31.19.9-.44.9h-.53a.8.8 0 0 1-.63-.32l-5.76-6.9zM25.18 4.14L16.63 8.4.06.12V17.3l4 2v8.03l4.02 2 .46.23 12.6 6.3.03-12.58 3.99-1.99.03-17.16zM20.16 22.7l-3.02 1.5.01-6.37 3.02 1.5v3.37zM9.1 21.82l6.39 3.2-6.4 3.18.01-6.38zm7.04 2.4L9.09 20.7v-6.91l7.05 3.52-.01 6.9zm-8.04-4.03l-3.02-1.5v-6.91l3.02 1.5v6.91zm1.6-7.23l6.48-3.21-.02 6.44-6.46-3.23zM1.05 16.7V1.74L15.5 8.96 8.55 12.4l-4.49-2.24v8.03l-3-1.5zm4 10.04v-6.91l3.02 1.5v6.91l-3.02-1.5zm15.07 7.53L9.66 29.03l6.93-3.46.53-.26 3.03-1.5-.03 10.45zm4.02-13.57l-2.98 1.5V18.7l-4.02-2.01.01-7.45 7.03-3.48-.04 14.92z"></path></g></svg></div>
@@ -78,9 +81,11 @@
                 "esri/widgets/Expand",
                 "esri/widgets/Slice",
                 "esri/layers/support/BuildingFilter",
-                "esri/renderers/UniqueValueRenderer"
+                "esri/renderers/UniqueValueRenderer",
+                "esri/symbols/PathSymbol3DLayer",
+                "esri/layers/StreamLayer"
             ],
-            function(Map, WebScene, SceneView, Basemap, Layer, SceneLayer, BuildingSceneLayer, FeatureLayer, ElevationLayer, GraphicsLayer, SketchViewModel, WebStyleSymbol, Graphic, geometryEngine, FeatureFilter, ClassBreaksRenderer, Slider, promiseUtils, LayerList, Expand, Slice, BuildingFilter, UniqueValueRenderer) {
+            function(Map, WebScene, SceneView, Basemap, Layer, SceneLayer, BuildingSceneLayer, FeatureLayer, ElevationLayer, GraphicsLayer, SketchViewModel, WebStyleSymbol, Graphic, geometryEngine, FeatureFilter, ClassBreaksRenderer, Slider, promiseUtils, LayerList, Expand, Slice, BuildingFilter, UniqueValueRenderer, PathSymbol3DLayer, StreamLayer) {
 
 
                 const defExpression = "byggnr <> 81809542 AND byggnr <> 81809569 AND byggnr <> 81809488 AND byggnr <> 300229671";
@@ -501,18 +506,41 @@
 
                 //--------LedningsRendrer---------------------
 
-                const roundTubeSymbol = {
-                    type: "line-3d",
+               
+                  var ledningsrendrer = {
+                    type: "simple", // autocasts as new SimpleRenderer()
+                    symbol: {
+                        type: "line-3d",
                     symbolLayers: [{
                       type: "path",
                       profile: "circle",
                       material: {
-                        color: [100, 100, 100]
+                        color: [255,165,0]
                       },
-                      width: 30, // the width in m
-                      height: 30 // the height in m
+                      width: 0.05, // the width in m
+                      height: 0.05 // the height in m
                     }]
-                  };
+                  }
+                    };
+
+                    var ledningsTraceRendrer = {
+                        type: "simple", // autocasts as new SimpleRenderer()
+                        symbol: {
+                            type: "line-3d",
+                        symbolLayers: [{
+                          type: "path",
+                          profile: "circle",
+                          material: {
+                            color: [255,26,64]
+                          },
+                          width: 0.07, // the width in m
+                          height: 0.07 // the height in m
+                        }]
+                      }
+                        };
+            
+
+
 
                   var symbolLine = {
                     type: "line-3d",  // autocasts as new LineSymbol3D()
@@ -588,17 +616,17 @@
                 const sketchLayer = new GraphicsLayer();
 
 
-                const person_sensor = new FeatureLayer({
-                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Forkbeard_siste_posisjon/FeatureServer/0",
-                        title: "Arbeidere",
+                var person_sensor = new StreamLayer({
+                        url: "https://demo09.geodata.no/arcgis/rest/services/Forkbeard_Stream_Out/StreamServer",
+                        title: "Arbeider",
                         //listMode: "hide",
                         outFields: ["*"],
                         purgeOptions: {
                             displayCount: 1000
                         },
-                        renderer: pointsRenderer,
+                        //renderer: pointsRenderer,
                         //popupTemplate: template,
-                        refreshInterval: 0.01,
+                        //refreshInterval: 0.01,
                         elevationInfo: {
                             // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
                             mode: "absolute-height",
@@ -610,14 +638,11 @@
                 );
 
                 const Ledningsnett = new FeatureLayer({
-                    url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Hotell_Oslo/FeatureServer/0",
+                    url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Hotell_Oslo/FeatureServer/0?token=NIAhzeOIVGIaV_Uthd8mgjctXIUObVkjjhLa1tfEwidhQbJPJF8uv7hIgH2FHZdV1rmx7dkm_lqIWSjB2pduAiPZ-xxwZAw0iwK4bnEwFtfX4lGGfnaERkSsts7fO3EzgFn_RMknQNL2uvD9V9KO-NDhTAxRfuSv7CWXbdC0KQHI7lCPoxbzSXmI0_OcEWmmGBM44Zdo-sYzafsA3PW5ByVMYF3B8yQIULIkmw8Zx7fCGpDcCygr8yv2wlkxWwduk8yFV1g1eewVoXvrq8e8Kg..",
                     title: "Ledningsnett",
                     visible: false,
                     outFields: ["*"],
-                    purgeOptions: {
-                        displayCount: 1000
-                    },
-                    renderer: roundTubeSymbol,
+                    renderer: ledningsrendrer,
                     opacity: 0.8,
 
                     //popupTemplate: template,
@@ -631,6 +656,70 @@
                 }
 
             );
+
+            const LedningsnettTrace = new FeatureLayer({
+                url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Ledningsnett_trace02/FeatureServer",
+                title: "LedningsnettTrace",
+                visible: false,
+                outFields: ["*"],
+                renderer: ledningsTraceRendrer,
+                opacity: 0.8,
+
+                //popupTemplate: template,
+                refreshInterval: 0.01,
+                elevationInfo: {
+                    // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
+                    mode: "absolute-height",
+                    offset: 1
+                },
+               
+
+            }
+
+        );
+
+        const LedningsnettTraceDownstream = new FeatureLayer({
+            url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Ledningsnett_trace/FeatureServer",
+            title: "LedningsnettTrace",
+            visible: false,
+            outFields: ["*"],
+            renderer: ledningsTraceRendrer,
+            opacity: 0.8,
+
+            //popupTemplate: template,
+            refreshInterval: 0.01,
+            elevationInfo: {
+                // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
+                mode: "absolute-height",
+                offset: 1
+            },
+
+        }
+
+    );
+
+            const Interior = new SceneLayer({
+                url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/bordogstol_geotek2020/SceneServer",
+                title: "Interior",
+                visible: false,
+                outFields: ["*"],
+                purgeOptions: {
+                    displayCount: 1000
+                },
+                //renderer: roundTubeSymbol,
+                opacity: 0.8,
+
+                //popupTemplate: template,
+                refreshInterval: 0.01,
+                elevationInfo: {
+                    // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
+                    mode: "absolute-height",
+                    offset: 5.7,
+                },
+
+            }
+
+        );
 
                 const Scene = new SceneLayer({
                         url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/scene_geotek2020/SceneServer",
@@ -761,7 +850,7 @@
                 var map = new Map({
                     //basemap: basemap,
                     //ground: "world-elevation",
-                    layers: [hotellBIM, Ledningsnett, Bygninger_Norge_Oslo, Stoler_sensor, person_sensor, Stoler, Scene],
+                    layers: [hotellBIM, Ledningsnett, Bygninger_Norge_Oslo, Stoler_sensor, person_sensor, Stoler, Scene, Interior, LedningsnettTrace, LedningsnettTraceDownstream],
                     ground: {
                         surfaceColor: "#2A363B"
                     }
@@ -915,9 +1004,19 @@
                         hotellBIM.activeFilterId = null;
                     });
 
-
+                    document
+                    .getElementById("leggTilLag")
+                    .addEventListener("click", function() {
+                       if (LedningsnettTrace.visible){
+                        LedningsnettTrace.visible=false;
+                       } else{
+                        LedningsnettTrace.visible=true;
+                        }                       
+                    });
 
                 view.ui.add("menu", "bottom-right");
+                view.ui.add("leggTilLag", "top-right");
+
 
                 const sliceButton = document.getElementById("slice");
                 view.ui.add(sliceButton, "top-right");
@@ -966,6 +1065,7 @@
                     doorsLayer.renderer = null;
                 }
 
+                
 
             });
     </script>
