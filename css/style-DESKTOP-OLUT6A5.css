@@ -1,0 +1,195 @@
+html,
+body,
+#viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#paneDiv {
+    padding: 1px;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1em;
+}
+
+#credits {
+    font-size: 0.7em;
+    line-height: 1.1em;
+}
+
+.esri-ui-top-right {
+    max-height: 100%;
+}
+
+#queryDiv,
+#resultDiv {
+    min-width: 20%;
+    font-size: 14px;
+    padding: 10px;
+    display: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    right: 20px;
+    height: auto;
+    top: 20px;
+    opacity: 0.95;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.geometry-options {
+    display: flex;
+    flex-direction: row;
+}
+
+.geometry-button {
+    flex: 1;
+    border-style: solid;
+    border-width: 1px;
+    border-image: none;
+}
+
+.geometry-button-selected {
+    background: #4c4c4c;
+    color: #fff;
+}
+
+#bufferNum {
+    width: 90%;
+    margin: 2.5em auto 0;
+}
+
+.count {
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.toolButton {
+    position: absolute;
+    top: 25%;
+    left: 16px;
+}
+
+#typeBilde {
+    text-align: center;
+}
+
+#typeBilde img {
+    width: 50px;
+}
+
+.typeTekst {
+    white-space: nowrap;
+    font-size: 50px;
+    font-weight: 800 !important;
+    display: inline-block;
+}
+
+.roomName {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.sensorNotPresent {
+    opacity: .3;
+}
+
+#closeIcon {
+    cursor: pointer;
+}
+
+#touchImg {
+    width: 80px !important;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.minContainer {
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    width: 12.1% !important;
+    height: 8% !important;
+    background-color: #33A7B7 !important;
+    opacity: 0.8 !important;
+}
+
+.circular ui icon button omr {
+    position: absolute !important;
+    left: 400px !important;
+    top: 33px !important;
+}
+
+.ui.button {
+    position: relative;
+    left: 5px;
+    margin: 3px !IMPORTANT;
+    cursor: pointer;
+    display: inline-block;
+    min-height: 1em;
+    outline: 0;
+    border: none;
+    vertical-align: baseline;
+    background: #e0e1e2 none;
+    color: rgba(0, 0, 0, .6);
+    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    padding: .78571429em 1.5em .78571429em;
+    text-transform: none;
+    text-shadow: none;
+    font-weight: 700;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    text-decoration: none;
+    border-radius: .28571429rem;
+    -webkit-box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, .15) inset;
+    box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, .15) inset;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: opacity .1s ease, background-color .1s ease, color .1s ease, background .1s ease, -webkit-box-shadow .1s ease;
+    transition: opacity .1s ease, background-color .1s ease, color .1s ease, background .1s ease, -webkit-box-shadow .1s ease;
+    transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
+    transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease, -webkit-box-shadow .1s ease;
+    will-change: '';
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ui.header {
+    position: absolute;
+    left: 28px;
+    top: 12px;
+    margin: calc(2rem - .14285714em) 0 1rem;
+    padding: 0 0;
+    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    line-height: 1.28571429em;
+    text-transform: none;
+    color: rgba(249, 245, 245, 0.87) !important;
+}
+
+#menu {
+    width: 150px;
+    padding: 0.8em;
+}
+
+#floorSelector {
+    height: 200px;
+    margin: 1em 0 1em -40px;
+    background: transparent;
+}
+
+@font-face {
+    font-family: "CustomFont";
+    src: url("https://yoursite.com/css/fonts/CustomFont.eot");
+    src: url("https://yoursite.com/css/fonts/CustomFont.woff") format("woff"), url("https://yoursite.com/css/fonts/CustomFont.otf") format("opentype"), url("https://yoursite.com/css/fonts/CustomFont.svg#filename") format("svg");
+}
