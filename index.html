@@ -538,18 +538,23 @@
                         }]
                       }
                         };
-            
 
-
-
-                  var symbolLine = {
-                    type: "line-3d",  // autocasts as new LineSymbol3D()
+                var ledningsTraceDownstreamRendrer = {
+                    type: "simple", // autocasts as new SimpleRenderer()
+                    symbol: {
+                        type: "line-3d",
                     symbolLayers: [{
-                        type: "path",  // autocasts as new PathSymbol3DLayer()
-                        size: 20,  // 20 meters in diameter
-                        material: { color: "#ff7380" }
+                      type: "path",
+                      profile: "circle",
+                      material: {
+                        color: [175,187,149]
+                      },
+                      width: 0.07, // the width in m
+                      height: 0.07 // the height in m
                     }]
-                };
+                  }
+                    };
+        
 
                 //---------------------------------------------------------------------------------
 
@@ -679,11 +684,11 @@
         );
 
         const LedningsnettTraceDownstream = new FeatureLayer({
-            url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Ledningsnett_trace/FeatureServer",
-            title: "LedningsnettTrace",
+            url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Ledningsnett_trace_downstream/FeatureServer",
+            title: "LedningsnettTraceDownstream",
             visible: false,
             outFields: ["*"],
-            renderer: ledningsTraceRendrer,
+            renderer: ledningsTraceDownstreamRendrer,
             opacity: 0.8,
 
             //popupTemplate: template,
