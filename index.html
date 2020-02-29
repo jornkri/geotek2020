@@ -23,6 +23,7 @@
     <!-- Load the Chart.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script src="moment.js"></script>
+    <script src="https://cdnjs.com/libraries/bodymovin" type="text/javascript"></script>
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/dark-blue/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
@@ -83,9 +84,11 @@
                 "esri/layers/support/BuildingFilter",
                 "esri/renderers/UniqueValueRenderer",
                 "esri/symbols/PathSymbol3DLayer",
-                "esri/layers/StreamLayer"
+                "esri/layers/StreamLayer",
+                "esri/symbols/PointSymbol3D",
+                "esri/symbols/ObjectSymbol3DLayer"
             ],
-            function(Map, WebScene, SceneView, Basemap, Layer, SceneLayer, BuildingSceneLayer, FeatureLayer, ElevationLayer, GraphicsLayer, SketchViewModel, WebStyleSymbol, Graphic, geometryEngine, FeatureFilter, ClassBreaksRenderer, Slider, promiseUtils, LayerList, Expand, Slice, BuildingFilter, UniqueValueRenderer, PathSymbol3DLayer, StreamLayer) {
+            function(Map, WebScene, SceneView, Basemap, Layer, SceneLayer, BuildingSceneLayer, FeatureLayer, ElevationLayer, GraphicsLayer, SketchViewModel, WebStyleSymbol, Graphic, geometryEngine, FeatureFilter, ClassBreaksRenderer, Slider, promiseUtils, LayerList, Expand, Slice, BuildingFilter, UniqueValueRenderer, PathSymbol3DLayer, StreamLayer, PointSymbol3D, ObjectSymbol3DLayer) {
 
 
                 const defExpression = "byggnr <> 81809542 AND byggnr <> 81809569 AND byggnr <> 81809488 AND byggnr <> 300229671";
@@ -93,6 +96,30 @@
 
 
                 //-------------------RENDERS------------------------------------------------------
+
+
+                const aniamtedRendrer = {
+                    type: "simple", // autocasts as new UniqueValueRenderer()
+                    symbol: new PointSymbol3D({
+                        symbolLayers: [
+                            new ObjectSymbol3DLayer({
+                                resource: {
+                                    // the dependencies referenced in the gltf file will be requested as well
+                                    href: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AnimatedCube/glTF/AnimatedCube.gltf" //"https://maxst.icons8.com/vue-static/landings/animated-icons/icons/warning-blink/warning-blink.json"
+                                },
+                                height: 3,
+                                material: {
+                                    color: "red"
+                                }
+                            })
+                        ]
+                    })
+                };
+
+
+
+
+
 
 
                 //--------Polyrendrer - Simple---------------------
@@ -118,6 +145,33 @@
                     }
                 };
                 //-------------------------------------------------------------------------------
+
+                //--------StolRendrer---------------------
+
+                var solidEdgesStol = {
+                    type: "solid",
+                    color: [0, 0, 0],
+                    size: 1
+                };
+
+                var stolRendrer = {
+                    type: "simple", // autocasts as new SimpleRenderer()
+                    symbol: {
+                        type: "mesh-3d",
+                        symbolLayers: [{
+                            type: "fill",
+                            material: {
+                                color: "black",
+                                colorMixMode: "replace"
+                            },
+                            edges: solidEdgesStol
+                        }]
+                    },
+                };
+
+
+
+                //------------------------------------------------------------------------------------------------
 
                 //--------Polyrendrer - Edge---------------------
                 var EdgeRenderer = {
@@ -536,25 +590,25 @@
                             width: 0.07, // the width in m
                             height: 0.07 // the height in m
                         }]
-                      }
-                        };
+                    }
+                };
 
                 var ledningsTraceDownstreamRendrer = {
                     type: "simple", // autocasts as new SimpleRenderer()
                     symbol: {
                         type: "line-3d",
-                    symbolLayers: [{
-                      type: "path",
-                      profile: "circle",
-                      material: {
-                        color: [57,174,169]
-                      },
-                      width: 0.07, // the width in m
-                      height: 0.07 // the height in m
-                    }]
-                  }
-                    };
-        
+                        symbolLayers: [{
+                            type: "path",
+                            profile: "circle",
+                            material: {
+                                color: [57, 174, 169]
+                            },
+                            width: 0.07, // the width in m
+                            height: 0.07 // the height in m
+                        }]
+                    }
+                };
+
 
                 //---------------------------------------------------------------------------------
 
@@ -569,11 +623,14 @@
                     minWorldLength: 2
                 };
 
+                var verticalOffsetKontakt = {
+                    screenLength: 250,
+                    maxWorldLength: 20,
+                    minWorldLength: 2
+                };
+
 
                 function getUniqueValueSymbol(name, color) {
-                    // The point symbol is visualized with an icon symbol. To clearly see the location of the point
-                    // we displace the icon vertically and add a callout line. The line connects the offseted symbol with the location
-                    // of the point feature.
                     return {
                         type: "point-3d", // autocasts as new PointSymbol3D()
                         symbolLayers: [{
@@ -601,6 +658,35 @@
                     };
                 }
 
+                function getUniqueValueSymbol2(name, color) {
+                    return {
+                        type: "point-3d", // autocasts as new PointSymbol3D()
+                        symbolLayers: [{
+                            type: "icon", // autocasts as new IconSymbol3DLayer()
+                            resource: {
+                                href: name
+                            },
+                            size: 50,
+                            outline: {
+                                color: "black",
+                                size: 8
+                            }
+                        }],
+
+                        verticalOffset: verticalOffsetKontakt,
+
+                        callout: {
+                            type: "line", // autocasts as new LineCallout3D()
+                            color: "white",
+                            size: 1,
+                            border: {
+                                color: color
+                            }
+                        }
+                    };
+                }
+
+
                 var pointsRenderer = {
                     type: "unique-value", // autocasts as new UniqueValueRenderer()
                     field: "status",
@@ -611,12 +697,15 @@
                     }]
 
                 };
+
+
+
                 var gifRendrer = {
                     type: "unique-value", // autocasts as new UniqueValueRenderer()
                     field: "verdi",
                     uniqueValueInfos: [{
-                        value: 1,
-                        symbol: getUniqueValueSymbol("data:image/png;base64,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")
+                        value: 2,
+                        symbol: getUniqueValueSymbol2("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAFTUlEQVR4nO2bW4hVVRjHf98+15nJvEATZEqIGVESoZXKzJyZepjsoYhyKnwQgrJCGvApgqAIoofsYhBEJUE4hmRX0gTN8cxYUWiNaOLgLScvKWmmzpx9zpz99eCkx5k9utc+6+zzcn4wL/t8/29968/aa6+19xqoUaNGjRrVQbPpjG6pm1fNGpxqNazZ5EOobsDxvtNs4u5q1VEVA3RrqhOVdUAdMBF1Nmt3amE1apEoG9ONNJBKf4jo4z4/FxB5WlpyH0dZU2QGaE9iDp7TBcy6YqDoJ9Tnn5G5DEZRV8UN0C3EkeRyRF4FkgFlvxLjCWly91ayNqiwAbolMRcn9h7oXSHkBZA38XIvSxs568WNUBEDtLduOsPFVxBZYqGNfoTlNLvrRVAb9ZVi1QDtSc/A005gKZCymRvYCbICL9clbQzbSlq2AbqeFNckF+LJEoQHqfSjVdgP+hHqfCqZ3MHy0xmgvUzATU/B4WZiejtKK3AvMKHcQkLyO/A9ItsR2YPIAIXBf6WNc0ETBDZAs8lHUPksVJlRI/qotOTXBQmt2lK4omjwyTK4AZ5EsjCxgsj5oKHBDTBIWnWKTiUMKAaeWKqOMxzYgHjgpBo/CV6oekbzQ99kduydeNm1ObeeYf7s01by48VPQiFQaHAD/ho6yvWpApAIWdZFjv2d4ufdky67Nq3R2mp3GIaOBw0OfAtIB0WEo+FqupxEYuwknUjYGV0IR0xWimaPQeUP44J8SMbGdjZpywAYMAk2NEAPG8WPg19nrRmgYlSjmQHi7DeKHwe/zibiljZ6wiGTcMOVoLfTLN6fhM80mozbGgFen0m4mQGO85tR/Dj4ddbaLeCIUY1mBjTlDoKU/bCu4BxwjmOu0W1qZIAIiuo2s5rG4jcCLM0BP0oHRROB+W7QIWusGYXfOsDKCFDtNZWYG+B53caaUfjPARZGgDgRGJApbAcCLzX98H8Mlj0CznE+Z3x7Ghsgggd8a6orxW/Zmyx3DhDZIA/gmsrCvRFSvgqlG8GvsxbmgK/DiMIZkHQ3AWdCaRk7B4hA3Gd/YIBLPLc+jDD4drgEWcCQZulCeTaMPhZTlnUcupRPLvyFR76UBZwKpQzbpPYk7sCzszIsG+F+aXE3hpGGfisszYU+YEdYvUUGOO5uCisOdQtcQleArA6jPHCkgZ92TQJV5s0+w4ypod+5rjRd/ZVS1p2na4nRmNqNcIuJrv9wA6+tmomnF5p3RHnxyX3Mmm5qgpwilrtJmjhrKLxIWR9GpIMijrxuqtvWN+Vi5wE8Fbb1TQlRgbeynM6DjS9D9bnVQL+RJDV2xPpduzJymkT+XUPRGMo2QOZSQFlmommff4LGyZcWbY2TXdrnnzBsWV8K++grxdr5AM2m16K6KGh8Ydhh35/1AMy8cdB0L7ALz73TxjkBewZsrptK3NtD5T+VKyoZac312Ehm7euw3Dd0BNWltvKNi/K2rc6D5c/j0ppfg/CBzZyjWviF69wXbGa0fz6g6D5PZVaI/wCPyW3kbSa1boC0kcORRWDnM9oIBWCxjTNBo6nICRFpzh3AoY0y3xyN4KG6RDJuqO3u1ajYERlpdvsRbQcp51mtwHPSml9jq67RVPSMkLTkd+IV24FjIeRFlE7JuO/brquUSA5La2/9DRSHPwe5J6DkLMpiaXW/qWhhRHRKTJoGj3I+nwFddfVg9iM6L4rOX2guYrQ7/RSibwDX+pTThZNbJs1YOitzdSI3AEC31k0D7x3g4ZFLA6h2Smv+i6hrqYoB/6Pd6TbEW0BD/q2o/kGiRo0aNWqU8B+NlJ1hR6TBTAAAAABJRU5ErkJggg==")
 
                     }]
                 };
@@ -663,7 +752,7 @@
                         elevationInfo: {
                             // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
                             mode: "absolute-height",
-                            offset: 8
+                            offset: 10.5
                         },
 
                     }
@@ -709,69 +798,69 @@
                 );
 
 
-            const LedningsnettTrace = new FeatureLayer({
-                url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Ledningsnett_trace04/FeatureServer",
-                title: "LedningsnettTrace",
-                visible: false,
-                outFields: ["*"],
-                renderer: ledningsTraceRendrer,
-                opacity: 0.8,
+                const LedningsnettTrace = new FeatureLayer({
+                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Ledningsnett_trace04/FeatureServer",
+                        title: "LedningsnettTrace",
+                        visible: false,
+                        outFields: ["*"],
+                        renderer: ledningsTraceRendrer,
+                        opacity: 0.8,
 
-                //popupTemplate: template,
-                refreshInterval: 0.01,
-                elevationInfo: {
-                    // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
-                    mode: "absolute-height",
-                    offset: 1
-                },
-               
+                        //popupTemplate: template,
+                        refreshInterval: 0.01,
+                        elevationInfo: {
+                            // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
+                            mode: "absolute-height",
+                            offset: 1
+                        },
 
-            }
 
-        );
+                    }
 
-        const LedningsnettTraceDownstream = new FeatureLayer({
-            url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Ledningsnett_trace_downstream/FeatureServer",
-            title: "LedningsnettTraceDownstream",
-            visible: false,
-            outFields: ["*"],
-            renderer: ledningsTraceDownstreamRendrer,
-            opacity: 0.8,
+                );
 
-            //popupTemplate: template,
-            refreshInterval: 0.01,
-            elevationInfo: {
-                // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
-                mode: "absolute-height",
-                offset: 1
-            },
+                const LedningsnettTraceDownstream = new FeatureLayer({
+                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/Ledningsnett_trace_downstream/FeatureServer",
+                        title: "LedningsnettTraceDownstream",
+                        visible: false,
+                        outFields: ["*"],
+                        renderer: ledningsTraceDownstreamRendrer,
+                        opacity: 0.8,
 
-        }
+                        //popupTemplate: template,
+                        refreshInterval: 0.01,
+                        elevationInfo: {
+                            // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
+                            mode: "absolute-height",
+                            offset: 1
+                        },
 
-    );
+                    }
 
-            const Interior = new SceneLayer({
-                url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/bordogstol_geotek2020/SceneServer",
-                title: "Interior",
-                //visible: false,
-                outFields: ["*"],
-                //renderer: roundTubeSymbol,
-                opacity: 0.8,
+                );
 
-                //popupTemplate: template,
-                refreshInterval: 0.01,
-                elevationInfo: {
-                    // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
-                    mode: "absolute-height",
-                    offset: 5.7,
-                },
+                const Interior = new SceneLayer({
+                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/bordogstol_geotek2020/SceneServer",
+                        title: "Interior",
+                        //visible: false,
+                        outFields: ["*"],
+                        //renderer: roundTubeSymbol,
+                        opacity: 0.8,
 
-            }
+                        //popupTemplate: template,
+                        refreshInterval: 0.01,
+                        elevationInfo: {
+                            // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
+                            mode: "absolute-height",
+                            offset: 8.1,
+                        },
 
-        );
+                    }
+
+                );
 
                 const Scene = new SceneLayer({
-                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/scene03/SceneServer",
+                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/scene05/SceneServer",
                         title: "Scene",
                         //visible: false,
                         //listMode: "hide",
@@ -782,14 +871,14 @@
                         elevationInfo: {
                             // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
                             mode: "absolute-height",
-                            offset: -1.2
+                            offset: 8.1
                         },
 
                     }
 
                 );
                 const Stoler = new SceneLayer({
-                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/stol_scandicOpera/SceneServer",
+                        url: "https://services.arcgis.com/2JyTvMWQSnM2Vi8q/arcgis/rest/services/stoler/SceneServer",
                         title: "Stoler",
                         //visible: false,
                         //listMode: "hide",
@@ -797,13 +886,13 @@
                         purgeOptions: {
                             displayCount: 1000
                         },
-                        //renderer: DisTechRendrerPROX,
+                        renderer: stolRendrer,
                         //popupTemplate: template,
                         refreshInterval: 0.01,
                         elevationInfo: {
                             // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
                             mode: "absolute-height",
-                            offset: 8.1
+                            offset: 8.03
                         },
 
                     }
